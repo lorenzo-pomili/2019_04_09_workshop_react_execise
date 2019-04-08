@@ -2,6 +2,7 @@ import React from 'react';
 import Header from 'src/components/Header';
 import ListElement from 'src/components/ListElement';
 import AddElement from './AddElement';
+import * as todoList from 'src/services/todoList';
 
 const getNewElement = (id, label) => ({id, label, isDone: false});
 
@@ -13,6 +14,14 @@ class ClassesList extends React.Component {
     };
     this.handleAdd = this.handleAdd.bind(this);
   }
+
+  componentDidMount(){
+    todoList.getData().then(list => {
+      this.setState({
+        currentList: list
+      });
+    });
+  };
 
   handleAdd(label){
     const newElemen = getNewElement(
