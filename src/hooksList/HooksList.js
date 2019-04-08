@@ -4,31 +4,33 @@ import ListElement from 'src/components/ListElement';
 import AddElement from './AddElement';
 import * as todoList from 'src/services/todoList';
 
-const getNewElement = (id, label) => ({id, label, isDone: false});
+const getNewElement = (label) => ({label, isDone: false});
 
-const HooksList = ({listElements}) => {
-    const [currentList, setCurrentList] = useState(listElements);
+const HooksList = () => {
+    const [currentList, setCurrentList] = useState([]);
+    const [needData, setNeedData] = useState(true);
 
     useEffect(() => {
-      todoList.getData().then(list => {
-        setCurrentList(list);
-      });
-    }, []);
+      if(needData){
+        todoList.getData().then(list => {
+          setNeedData(false);
+          setCurrentList(list);
+        });
+      }
+    }, [needData]);
 
     const handleAdd = (label) => {
-      const newElemen = getNewElement(
-        (currentList.length + 1),
-        label
-      );
-      setCurrentList(currentList.concat(newElemen));
+      todoList.addData(label).then(() => {
+        setNeedData(true);
+      });
     }
 
     return (<div>
       <Header />
       <div>
-      {currentList.map((e, i) =>
-        <ListElement key={i} {...e} />
-      )}
+        {currentList.map((e, i) =>
+          <ListElement key={i} {...e} />
+        )}
       </div>
       <AddElement onAdd={handleAdd}/>
     </div>);

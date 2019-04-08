@@ -7,29 +7,30 @@ import * as todoList from 'src/services/todoList';
 const getNewElement = (id, label) => ({id, label, isDone: false});
 
 class ClassesList extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      currentList: props.listElements
+      currentList: []
     };
     this.handleAdd = this.handleAdd.bind(this);
+    this.getTodoList = this.getTodoList.bind(this);
   }
 
-  componentDidMount(){
+  getTodoList(){
     todoList.getData().then(list => {
       this.setState({
         currentList: list
       });
     });
+  }
+
+  componentDidMount(){
+    this.getTodoList();
   };
 
   handleAdd(label){
-    const newElemen = getNewElement(
-      (this.state.currentList.length + 1),
-      label
-    );
-    this.setState({
-      currentList: this.state.currentList.concat(newElemen)
+    todoList.addData(label).then(() => {
+      this.getTodoList();
     });
   }
 
