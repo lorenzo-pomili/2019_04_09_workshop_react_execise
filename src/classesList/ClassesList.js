@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from 'src/components/Header';
 import ListElement from 'src/components/ListElement';
-import {listElements} from 'src/mocks/mocks';
 
 class ClassesList extends React.Component {
   constructor() {
@@ -13,7 +12,7 @@ class ClassesList extends React.Component {
       <div>
         <Header />
           <div>
-          {listElements.map((e, i) =>
+          {this.props.listElements.map((e, i) =>
             <ListElement key={i} {...e} />
           )}
         </div>
