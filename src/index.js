@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const Index = () => <div>Index</div>;
+const Header = () => <h1>Todo List</h1>;
 
 ReactDOM.render(
-    <Index />,
+    <div>
+      <Header />
+    </div>,
     document.getElementById('root')
 );
