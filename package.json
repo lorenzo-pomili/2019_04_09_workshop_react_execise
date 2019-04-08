@@ -1,0 +1,43 @@
+{
+  "name": "workshop_react",
+  "version": "",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "webpack": "webpack -w",
+    "server": "node server/server.js",
+    "test": "jest --watch"
+  },
+  "keywords": [],
+  "jest": {
+    "moduleNameMapper": {
+      "^src(.*)$": "<rootDir>/src$1"
+    },
+    "setupFiles": [
+      "./jestSetup.js"
+    ]
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "16.8.6",
+    "react-dom": "16.8.6"
+  },
+  "devDependencies": {
+    "@babel/core": "7.4.3",
+    "@babel/preset-env": "7.4.3",
+    "@babel/preset-react": "7.0.0",
+    "babel-loader": "8.0.5",
+    "cors": "2.8.5",
+    "enzyme": "3.9.0",
+    "enzyme-adapter-react-16": "1.12.1",
+    "html-webpack-plugin": "3.2.0",
+    "jest": "24.7.1",
+    "node-fetch": "2.3.0",
+    "react-router-dom": "5.0.0",
+    "webpack": "4.29.6",
+    "webpack-cli": "3.3.0",
+    "webpack-dev-server": "3.3.0"
+  }
+}
