@@ -12,3 +12,12 @@ export const addData = async (label) => fetch(`${BASE_URL}/addData`, {
     },
     body: JSON.stringify(label)
 });
+
+export const removeData = async (id) => fetch(`${BASE_URL}/removeData`, {
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(id)
+});

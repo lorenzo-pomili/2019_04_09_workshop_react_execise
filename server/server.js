@@ -53,6 +53,25 @@ app.post('/addData', (req, res) => {
   });
 });
 
+app.post('/removeData', (req, res) => {
+  let bodyStr = '';
+  req.on("data",function(chunk){
+      bodyStr += chunk.toString();
+  });
+  req.on("end",function(){
+      fs.readFile(filepathStorage, function(err, data){
+        if(err){
+          throw err;
+        }
+        const elemetToRemove = JSON.parse(bodyStr);
+        const list = JSON.parse(data);
+
+        writeFile(filepathStorage, list.filter(e => e.id !== elemetToRemove));
+        res.send(bodyStr);
+      });
+  });
+});
+
 app.post('/setData', (req, res) => {
   let bodyStr = '';
   req.on("data",function(chunk){

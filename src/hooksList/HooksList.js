@@ -19,17 +19,21 @@ const HooksList = () => {
       }
     }, [needData]);
 
-    const handleAdd = (label) => {
+    const handleAdd = label => {
       todoList.addData(label).then(() => {
         setNeedData(true);
       });
+    }
+
+    const handleRemove = id => {
+      todoList.removeData(id).then(() => setNeedData(true));
     }
 
     return (<div>
       <Header />
       <div>
         {currentList.map((e, i) =>
-          <ListElement key={i} {...e} />
+          <ListElement key={i} {...e} onRemove={handleRemove} />
         )}
       </div>
       <AddElement onAdd={handleAdd}/>

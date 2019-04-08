@@ -13,6 +13,7 @@ class ClassesList extends React.Component {
       currentList: []
     };
     this.handleAdd = this.handleAdd.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
     this.getTodoList = this.getTodoList.bind(this);
   }
 
@@ -29,9 +30,11 @@ class ClassesList extends React.Component {
   };
 
   handleAdd(label){
-    todoList.addData(label).then(() => {
-      this.getTodoList();
-    });
+    todoList.addData(label).then(() => this.getTodoList());
+  }
+
+  handleRemove(id) {
+    todoList.removeData(id).then(() => this.getTodoList());
   }
 
   render(){
@@ -40,7 +43,7 @@ class ClassesList extends React.Component {
         <Header />
           <div>
             {this.state.currentList.map((e, i) =>
-              <ListElement key={i} {...e} />
+              <ListElement key={i} {...e} onRemove={this.handleRemove}/>
             )}
           </div>
           <AddElement onAdd={this.handleAdd}/>
