@@ -28,6 +28,8 @@ const writeFile = (filepath, fileContent) => {
   });
 };
 
+const getMaxId = list => Math.max(...list.map(e => e.id));
+
 app.post('/addData', (req, res) => {
   let bodyStr = '';
   req.on("data",function(chunk){
@@ -38,7 +40,33 @@ app.post('/addData', (req, res) => {
         if(err){
           throw err;
         }
-        writeFile(filepathStorage, JSON.parse(data).concat(JSON.parse(bodyStr)));
+        const list = JSON.parse(data);
+        const newElement = {
+          id: (getMaxId(list) + 1) || 0,
+          label: JSON.parse(bodyStr),
+          idDone: false
+        }
+
+        writeFile(filepathStorage, list.concat(newElement));
+        res.send(bodyStr);
+      });
+  });
+});
+
+app.post('/removeData', (req, res) => {
+  let bodyStr = '';
+  req.on("data",function(chunk){
+      bodyStr += chunk.toString();
+  });
+  req.on("end",function(){
+      fs.readFile(filepathStorage, function(err, data){
+        if(err){
+          throw err;
+        }
+        const elemetToRemove = JSON.parse(bodyStr);
+        const list = JSON.parse(data);
+
+        writeFile(filepathStorage, list.filter(e => e.id !== elemetToRemove));
         res.send(bodyStr);
       });
   });
